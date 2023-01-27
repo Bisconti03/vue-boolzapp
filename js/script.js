@@ -195,8 +195,21 @@ const { createApp } = Vue
         
       },
 
-      
+     
 
+      filterList () {
+        this.contacts.forEach(contact => {
+            if (contact.name.toLowerCase().includes(this.searchContact.toLowerCase())) {
+                contact.visible = true;
+            } else {
+                contact.visible = false;
+            }
+        });
+    },
+
+    
+
+    
     
         
     

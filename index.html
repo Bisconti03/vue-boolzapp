@@ -29,10 +29,10 @@
                             
                             <div class="d-flex align-items-center">
                                 <img class="user_image"src="./img/avatar_io.jpg" alt="">
-                                <h4 class="fs-5">Sofia</h4>
+                                <h4 class="fs-5 ps-2">Sofia</h4>
                             </div>
     
-                            <div class="mini_nav_user_icons d-flex justify-content-around align-items-center">
+                            <div class="mini_nav_user_icons d-flex justify-content-around  align-items-center">
                                 <i class="icon_s fas fa-circle-notch"></i>
                                 <i class="icon_s fas fa-comment-alt"></i>
                                 <i class="icon_s fas fa-ellipsis-v"></i>
@@ -54,19 +54,22 @@
                         <div class="position-relative">
                             
                             <input type="text" class="form-control " aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm" type="text" placeholder="Cerca contatto" 
-                             >
+                            v-model="searchContact" @keyup="filterList()" >
                         </div>
                          
                         
                     </div> 
                  
                     <div class="users_group"  >
-                        <div class="users d-flex" v-on:click="activeContact= index"   v-for="(contact, index) in contacts" 
-                        :class="index === activeContact ? `active` : ``" 
-                            >        
-                            <img class="user_image" :src="'img/avatar' + contact.avatar + '.jpg'" alt="">
-                            <h4 class="fs-5">{{contact.name}}</h4>
-                        </div>
+                            <template v-for="(contact, index) in contacts ">
+                                <div class="users d-flex" v-on:click="activeContact= index"  v-if=" contact.visible">    
+                                    
+                                <img class="user_image" :src="'img/avatar' + contact.avatar + '.jpg'" alt="">
+                                <h4 class="fs-5">{{contact.name}}</h4>
+                            </div>
+                            </template>
+                        
+                       
 
                        
                     </div>
@@ -97,7 +100,7 @@
                     </div>
                     <div class="chat_stage d-flex flex-column " >
                         <div v-for="message in contacts[activeContact].messages" :class="message.status === `sent` ? `sent` : `received`" class="message col4 ">
-                            <div class="message_text">{{message.message}}</div>
+                            <div class="">{{message.message}}</div>
                             <div class="message_date text-end">{{message.date}}</div>
                         </div>
                         
@@ -108,7 +111,7 @@
     
                         <div class="input-group mb-3">
                             
-                            <input @keyup.enter="addNewMess" v-model="newMess" type="text" class="form-control mt-3" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default">
+                            <input @keyup.enter="addNewMess" v-model="newMess" type="text" class="form-control mt-3" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default" placeholder="Scrivi un messaggio">
                           </div>
     
                         <i class="icon_s fas fa-microphone "></i>
